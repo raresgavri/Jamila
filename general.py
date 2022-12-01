@@ -2,15 +2,6 @@ import os
 import json
 
 
-def create_project_dir(directory):
-    if not os.path.exists(directory):
-        print('Creating project ' + directory)
-        os.makedirs(directory)
-
-
-basket = dict()
-
-
 def prepare_data_files(cart_file):
     if not os.path.exists(cart_file):
         print('Creating shopping basket: ' + cart_file)
