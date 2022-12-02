@@ -29,15 +29,12 @@ class IngredientFinder(HTMLParser):
 
     def handle_data(self, data):
         if self.amount_tag is True:
-            print('Encountered amount: ' + data)
             self.amount_tag = False
             self.amount_value = data
         elif self.unit_tag is True:
-            print('Encountered unit: ' + data)
             self.unit_tag = False
             self.unit_value = data
         if self.name_tag is True:
-            print('Encountered name: ' + data)
             self.recipe[data] = {'amount': self.amount_value, 'unit': self.unit_value}
             self.amount_value = self.unit_value = None
             self.name_tag = False

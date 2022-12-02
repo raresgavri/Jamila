@@ -1,15 +1,23 @@
 import os
 import json
+from urllib.request import urlopen
+from ingredients_finder import IngredientFinder
 
 
-def prepare_data_files(cart_file):
-    if not os.path.exists(cart_file):
-        print('Creating shopping basket: ' + cart_file)
-        with open(cart_file, 'w') as f:
-            print("The json file is created")
-            return f
-    elif os.path.exists(cart_file):
-        with open(cart_file) as user_file:
-            basket = json.load(user_file)
-            print('Basket loaded')
-            return user_file
+
+
+
+def gather_ingredients(page_url):
+    html_string = ''
+    try:
+        print("Now crawling " + page_url)
+        response = urlopen(page_url)
+        if response.getheader('Content-Type') == 'text/html; charset=UTF-8':
+            html_bytes = response.read()
+            html_string = html_bytes.decode("utf-8")
+        finder = IngredientFinder()
+        finder.feed(html_string)
+    except:
+        print("Can't crawl page")
+        return dict()
+    return finder.recipe_ingredients()
