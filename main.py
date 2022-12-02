@@ -25,6 +25,7 @@ for i in range(0, len(lines)):
         if i not in basket:
             basket[i] = current_cart[i]
         else:
+            if basket[i]['unit'] is None:  basket[i]['amount'] = basket[i]['amount'] + ' + ' + (current_cart[i]['amount'])
             if basket[i]['unit'] == current_cart[i]['unit'] and basket[i]['unit']:
                 if basket[i]['amount'] is not int:
                     basket[i]['amount'] = float(Fraction(basket[i]['amount'])) + float(
